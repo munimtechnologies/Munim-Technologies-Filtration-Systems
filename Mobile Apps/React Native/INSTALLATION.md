@@ -17,16 +17,33 @@ npm install react-native-nsfw-filter
 ### 2. Install Required Dependencies
 
 ```bash
-npm install @tensorflow/tfjs @tensorflow/tfjs-react-native expo-image-manipulator base-64 jpeg-js
+npm install @tensorflow/tfjs @tensorflow/tfjs-react-native expo-image-manipulator expo-gl @react-native-async-storage/async-storage react-native-fs base-64 jpeg-js
 ```
 
 For Expo projects:
 
 ```bash
-expo install expo-image-manipulator
+npx expo install expo-image-manipulator expo-gl @react-native-async-storage/async-storage react-native-fs
 ```
 
-### 3. Setup TensorFlow.js
+### 3. Configure Metro
+
+Create or update `metro.config.js` in your project root to handle `.bin` model files:
+
+```javascript
+// metro.config.js
+const { getDefaultConfig } = require("expo/metro-config");
+
+/** @type {import('expo/metro-config').MetroConfig} */
+const config = getDefaultConfig(__dirname);
+
+// Add .bin to the asset extensions
+config.resolver.assetExts.push("bin");
+
+module.exports = config;
+```
+
+### 4. Setup TensorFlow.js
 
 Add this import to your app's entry point (usually `App.js` or `App.tsx`):
 
@@ -34,7 +51,7 @@ Add this import to your app's entry point (usually `App.js` or `App.tsx`):
 import "@tensorflow/tfjs-react-native";
 ```
 
-### 4. Add Model Files
+### 5. Add Model Files
 
 1. Create an `assets/model/` directory in your project
 2. Copy the model files:
@@ -43,7 +60,7 @@ import "@tensorflow/tfjs-react-native";
 
 You can find these files in the `react-native-nsfw-filter/assets/model/` directory.
 
-### 5. Basic Implementation
+### 6. Basic Implementation
 
 ```typescript
 import React, { useEffect, useState } from "react";

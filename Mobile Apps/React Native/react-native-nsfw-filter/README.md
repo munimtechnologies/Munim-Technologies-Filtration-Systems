@@ -24,18 +24,41 @@ npm install react-native-nsfw-filter
 You'll need to install these dependencies if they're not already in your project:
 
 ```bash
-npm install @tensorflow/tfjs @tensorflow/tfjs-react-native expo-image-manipulator
+npm install @tensorflow/tfjs @tensorflow/tfjs-react-native expo-image-manipulator expo-gl @react-native-async-storage/async-storage react-native-fs
 ```
+
+For Expo projects:
+
+```bash
+npx expo install expo-image-manipulator expo-gl @react-native-async-storage/async-storage react-native-fs
+```
+
+> **Note**: For React Native CLI projects, you may need to run `cd ios && pod install` after installing `react-native-fs`.
 
 ### Additional Setup
 
-1. **Initialize TensorFlow.js** in your app's entry point (usually `App.js` or `App.tsx`):
+1. **Configure Metro** to handle `.bin` model files by creating/updating `metro.config.js` in your project root:
+
+```javascript
+// metro.config.js
+const { getDefaultConfig } = require("expo/metro-config");
+
+/** @type {import('expo/metro-config').MetroConfig} */
+const config = getDefaultConfig(__dirname);
+
+// Add .bin to the asset extensions
+config.resolver.assetExts.push("bin");
+
+module.exports = config;
+```
+
+2. **Initialize TensorFlow.js** in your app's entry point (usually `App.js` or `App.tsx`):
 
 ```javascript
 import "@tensorflow/tfjs-react-native";
 ```
 
-2. **Download the model files**: You'll need the NSFW detection model files. You can use the ones provided in this package or train your own.
+3. **Download the model files**: You'll need the NSFW detection model files. You can use the ones provided in this package or train your own.
 
 ## Usage
 

@@ -1,6 +1,6 @@
 {
   "name": "react-native-nsfw-filter",
-  "version": "1.0.1",
+  "version": "1.0.6",
   "description": "NSFW content detection for React Native using TensorFlow.js",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -22,17 +22,21 @@
   ],
   "author": "Munim Technologies",
   "license": "MIT",
-  "homepage": "https://github.com/munimtech/react-native-nsfw-filter#readme",
+  "homepage": "https://github.com/sheehanmunim/Munim-Technologies-Filtration-Systems/tree/main/Mobile%20Apps/React%20Native",
   "repository": {
     "type": "git",
-    "url": "https://github.com/munimtech/react-native-nsfw-filter.git"
+    "url": "https://github.com/sheehanmunim/Munim-Technologies-Filtration-Systems.git",
+    "directory": "Mobile Apps/React Native/react-native-nsfw-filter"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-native": ">=0.60.0",
     "@tensorflow/tfjs": "^4.21.0",
     "@tensorflow/tfjs-react-native": "^1.0.0",
-    "expo-image-manipulator": "~12.0.5"
+    "expo-image-manipulator": "~12.0.5",
+    "expo-gl": "^13.0.1",
+    "@react-native-async-storage/async-storage": "^1.23.1",
+    "react-native-fs": "^2.20.0"
   },
   "dependencies": {
     "base-64": "^1.0.0",
