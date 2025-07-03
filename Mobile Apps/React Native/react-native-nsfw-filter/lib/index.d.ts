@@ -1,3 +1,16 @@
+/**
+ * React Native NSFW Filter
+ *
+ * Built upon the excellent work by Infinite Red and their NSFWJS project:
+ * - NSFWJS: https://github.com/infinitered/nsfwjs
+ * - NSFWJS Mobile: https://github.com/infinitered/nsfwjs-mobile
+ *
+ * This implementation fixes compatibility issues and enhances the API
+ * for modern React Native applications.
+ *
+ * @author Munim Technologies
+ * @license MIT
+ */
 export interface NSFWPrediction {
     className: string;
     probability: number;

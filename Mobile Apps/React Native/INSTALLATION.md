@@ -213,3 +213,14 @@ If you encounter issues:
 - Implement proper error handling for production use
 - Consider caching the model for better performance
 - Add logging and analytics as needed
+
+## Credits
+
+This library is built upon the excellent work by [Infinite Red](https://infinite.red/) and their [NSFWJS](https://github.com/infinitered/nsfwjs) project. We've fixed compatibility issues and enhanced it for modern React Native applications.
+
+**Original Projects:**
+
+- [NSFWJS](https://github.com/infinitered/nsfwjs) - Client-side NSFW content detection
+- [NSFWJS Mobile](https://github.com/infinitered/nsfwjs-mobile) - React Native implementation
+
+Please consider starring the original repositories to support their continued development.

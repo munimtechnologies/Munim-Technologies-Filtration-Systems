@@ -225,4 +225,10 @@ MIT
 
 ## Credits
 
-This library is based on the [NSFWJS](https://github.com/infinitered/nsfwjs) project and adapted for React Native using TensorFlow.js.
+This library is built upon the excellent work by [Infinite Red](https://infinite.red/) and their [NSFWJS](https://github.com/infinitered/nsfwjs) project. Special thanks to:
+
+- **[NSFWJS](https://github.com/infinitered/nsfwjs)** - The original JavaScript library for NSFW content detection
+- **[NSFWJS Mobile](https://github.com/infinitered/nsfwjs-mobile)** - Mobile implementation that served as inspiration
+- **[Infinite Red](https://infinite.red/)** - For creating and maintaining the foundational NSFW detection technology
+
+This React Native implementation builds upon their work, with fixes and optimizations specifically for React Native environments using TensorFlow.js React Native.

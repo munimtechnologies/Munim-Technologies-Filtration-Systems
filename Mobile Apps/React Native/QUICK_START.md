@@ -130,3 +130,7 @@ const pornConfidence = await filter.getClassConfidence(
 - Check the [troubleshooting guide](INSTALLATION.md#troubleshooting)
 - Look at the [example application](Example%20Application/)
 - Create an issue if you're stuck
+
+## 🙏 Credits
+
+Built upon [Infinite Red's NSFWJS](https://github.com/infinitered/nsfwjs) with fixes for React Native. Please star their original repository!

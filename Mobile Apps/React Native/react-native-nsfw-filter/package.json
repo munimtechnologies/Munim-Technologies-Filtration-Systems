@@ -1,6 +1,6 @@
 {
   "name": "react-native-nsfw-filter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "NSFW content detection for React Native using TensorFlow.js",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -15,10 +15,14 @@
     "image-classification",
     "tensorflow",
     "ai",
-    "machine-learning"
+    "machine-learning",
+    "nsfwjs",
+    "infinite-red",
+    "content-moderation"
   ],
   "author": "Munim Technologies",
   "license": "MIT",
+  "homepage": "https://github.com/munimtech/react-native-nsfw-filter#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/munimtech/react-native-nsfw-filter.git"
@@ -43,6 +47,7 @@
     "lib",
     "assets",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "CREDITS.md"
   ]
 }

@@ -1,4 +1,17 @@
 "use strict";
+/**
+ * React Native NSFW Filter
+ *
+ * Built upon the excellent work by Infinite Red and their NSFWJS project:
+ * - NSFWJS: https://github.com/infinitered/nsfwjs
+ * - NSFWJS Mobile: https://github.com/infinitered/nsfwjs-mobile
+ *
+ * This implementation fixes compatibility issues and enhances the API
+ * for modern React Native applications.
+ *
+ * @author Munim Technologies
+ * @license MIT
+ */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
