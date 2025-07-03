@@ -4,6 +4,12 @@
   "version": "1.0.0",
   "description": "Get detailed information about any website including domain info, technology stack, and page analytics",
   "permissions": ["activeTab", "storage", "contextMenus", "scripting"],
+  "web_accessible_resources": [
+    {
+      "resources": ["model/*", "nsfw-detector.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "action": {
     "default_popup": "popup.html",
     "default_title": "Website Info Tool",

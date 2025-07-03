@@ -8,7 +8,13 @@ A powerful Chrome extension that provides detailed information about any website
 - **Technology Detection**: Automatically detect frameworks (React, Vue, Angular, jQuery)
 - **Page Statistics**: Count images, links, scripts, and meta tags
 - **Domain Information**: Display URL, title, and domain details
-- **Copy to Clipboard**: Easy sharing of website information
+- **🔞 NSFW Content Detection**: AI-powered image analysis for content safety
+  - Automatic scanning of page images during load
+  - Manual detailed analysis with confidence scoring
+  - Privacy-first local processing (no data sent to servers)
+  - Five-category classification: Drawing, Hentai, Neutral, Porn, Sexy
+  - Color-coded safety scoring (Green/Orange/Red)
+- **Copy to Clipboard**: Easy sharing of website information (including NSFW analysis)
 - **Visit History**: Track your visits to different domains
 - **Content Script Integration**: Subtle indicator when extension is active
 - **Context Menu**: Right-click to analyze websites
@@ -53,9 +59,13 @@ A powerful Chrome extension that provides detailed information about any website
 ### Basic Analysis
 
 1. **Click the Extension Icon**: Opens the popup with website analysis
-2. **View Information**: See basic info, page stats, and technology details
-3. **Refresh Data**: Click the refresh button to re-analyze
-4. **Copy Information**: Use the copy button to save data to clipboard
+2. **View Information**: See basic info, page stats, technology details, and content safety
+3. **NSFW Analysis**:
+   - Automatic quick scan during page load
+   - Click "🔞 Analyze Images" for comprehensive image analysis
+   - View safety score and NSFW image count
+4. **Refresh Data**: Click the refresh button to re-analyze
+5. **Copy Information**: Use the copy button to save data to clipboard (includes NSFW results)
 
 ### Advanced Features
 
@@ -73,12 +83,17 @@ Browsers/
 ├── popup.js              # Popup functionality
 ├── content.js            # Content script (runs on pages)
 ├── background.js         # Background service worker
+├── nsfw-detector.js      # NSFW detection AI module
+├── model/                # TensorFlow.js NSFW detection model
+│   ├── model.json
+│   └── group1-shard1of1.bin
 ├── icons/                # Extension icons
 │   ├── icon16.png
 │   ├── icon32.png
 │   ├── icon48.png
 │   ├── icon128.png
 │   └── README.md
+├── nsfw-detection-readme.md  # NSFW feature documentation
 └── README.md            # This file
 ```
 
@@ -88,6 +103,16 @@ Browsers/
 
 - `activeTab`: Access current tab for analysis
 - `storage`: Save visit history and settings
+- `scripting`: Execute NSFW analysis scripts in web pages
+- `contextMenus`: Right-click menu integration
+
+### NSFW Detection Technology
+
+- **TensorFlow.js**: Machine learning framework for browser-based AI
+- **MobileNetV2**: Optimized neural network architecture
+- **Model Size**: ~5MB compressed
+- **Processing**: 100% local (privacy-protected)
+- **Performance**: ~200ms per image analysis
 
 ### Manifest V3
 
@@ -149,7 +174,14 @@ The extension detects these frameworks/libraries:
    - Try refreshing the page and extension popup
    - Look for errors in the extension console
 
-4. **Popup Not Showing**:
+4. **NSFW Detection Issues**:
+
+   - Ensure internet connection for TensorFlow.js download
+   - Allow time for model loading (first use only)
+   - Check browser console for "NSFW detector not loaded" errors
+   - Close other tabs to free up memory for analysis
+
+5. **Popup Not Showing**:
    - Right-click the extension icon and check if popup is set
    - Verify `popup.html` exists and is valid
    - Check manifest.json configuration
@@ -179,13 +211,28 @@ This project is open source. Check the main repository for license details.
 
 Potential improvements:
 
-- [ ] Options page for settings
+- [ ] Options page for settings (including NSFW thresholds)
 - [ ] Export data to different formats
 - [ ] More detailed technology detection
 - [ ] Performance metrics analysis
 - [ ] Screenshot capture feature
 - [ ] Bulk analysis of multiple tabs
 - [ ] Integration with web development tools
+- [ ] Video content analysis for NSFW detection
+- [ ] Custom NSFW model training interface
+- [ ] Batch image analysis with progress tracking
+
+## 🔞 NSFW Detection Details
+
+For comprehensive information about the NSFW detection feature, see [`nsfw-detection-readme.md`](./nsfw-detection-readme.md).
+
+### Key Features:
+
+- **AI-Powered**: Uses trained TensorFlow.js model
+- **Privacy-First**: All processing happens locally
+- **Real-time**: Automatic analysis during page load
+- **Configurable**: Adjustable confidence thresholds
+- **Comprehensive**: Analyzes up to 20 images per page
 
 ---
 

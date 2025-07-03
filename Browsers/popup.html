@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Website Info Tool</title>
     <link rel="stylesheet" href="popup.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.15.0/dist/tf.min.js"></script>
   </head>
   <body>
     <div class="container">
@@ -62,13 +63,33 @@
           </div>
         </div>
 
+        <div class="info-section">
+          <h3>🔞 Content Safety</h3>
+          <div class="info-item">
+            <span class="label">NSFW Images:</span>
+            <span class="value" id="nsfwImages">-</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Images Analyzed:</span>
+            <span class="value" id="imagesAnalyzed">-</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Safety Score:</span>
+            <span class="value" id="safetyScore">-</span>
+          </div>
+        </div>
+
         <div class="actions">
           <button id="refreshBtn" class="btn-primary">🔄 Refresh</button>
           <button id="copyBtn" class="btn-secondary">📋 Copy Info</button>
+          <button id="analyzeNSFWBtn" class="btn-secondary">
+            🔞 Analyze Images
+          </button>
         </div>
       </div>
     </div>
 
+    <script src="nsfw-detector.js"></script>
     <script src="popup.js"></script>
   </body>
 </html>

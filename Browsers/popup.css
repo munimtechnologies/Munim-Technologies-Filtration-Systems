@@ -148,3 +148,34 @@ h3 {
   text-align: center;
   font-size: 13px;
 }
+
+/* NSFW Analysis Styles */
+#nsfwImages {
+  font-weight: bold;
+  color: #dc3545;
+}
+
+#safetyScore {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+#analyzeNSFWBtn {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  color: white;
+  font-weight: bold;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+#analyzeNSFWBtn:hover {
+  background: linear-gradient(135deg, #ee5a24, #d63031);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(238, 90, 36, 0.4);
+}
+
+#analyzeNSFWBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
