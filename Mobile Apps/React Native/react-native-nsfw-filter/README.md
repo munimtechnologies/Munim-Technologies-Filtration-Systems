@@ -17,6 +17,8 @@ A React Native library for detecting NSFW (Not Safe For Work) content in images 
 npm install react-native-nsfw-filter
 ```
 
+> **✅ Now Available on npm!** The package has been published and is ready for use.
+
 ### Required Peer Dependencies
 
 You'll need to install these dependencies if they're not already in your project:

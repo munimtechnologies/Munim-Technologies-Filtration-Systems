@@ -4,24 +4,17 @@ Get up and running with NSFW content detection in your React Native app in just 
 
 ## ⚡ 5-Minute Setup
 
-### 1. Copy the Package
+### 1. Install the Package
 
 ```bash
-# Copy the library to your project
-cp -r "Mobile Apps/React Native/react-native-nsfw-filter" ./
-```
-
-### 2. Install Dependencies
-
-```bash
-# Install the local package
-npm install ./react-native-nsfw-filter
+# Install from npm
+npm install react-native-nsfw-filter
 
 # Install required dependencies
-npm install @tensorflow/tfjs @tensorflow/tfjs-react-native expo-image-manipulator base-64 jpeg-js
+npm install @tensorflow/tfjs @tensorflow/tfjs-react-native expo-image-manipulator
 ```
 
-### 3. Initialize TensorFlow
+### 2. Initialize TensorFlow
 
 Add to your `App.js` or `App.tsx`:
 
@@ -29,17 +22,19 @@ Add to your `App.js` or `App.tsx`:
 import "@tensorflow/tfjs-react-native";
 ```
 
-### 4. Copy Model Files
+### 3. Copy Model Files
+
+The model files are included with the npm package. Copy them to your project:
 
 ```bash
 # Create assets directory
 mkdir -p assets/model
 
-# Copy model files
-cp react-native-nsfw-filter/assets/model/* assets/model/
+# Copy model files from node_modules
+cp node_modules/react-native-nsfw-filter/assets/model/* assets/model/
 ```
 
-### 5. Use in Your Component
+### 4. Use in Your Component
 
 ```typescript
 import React, { useEffect, useState } from "react";

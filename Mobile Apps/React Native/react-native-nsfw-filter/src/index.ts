@@ -78,8 +78,9 @@ export class NSFWFilter {
    * Convert image data to tensor
    */
   private imageToTensor(rawImageData: Uint8Array): tf.Tensor {
-    const TO_UINT8ARRAY = true;
-    const { width, height, data } = jpeg.decode(rawImageData, TO_UINT8ARRAY);
+    const { width, height, data } = jpeg.decode(rawImageData, {
+      useTArray: true,
+    });
 
     // Drop the alpha channel info for mobilenet
     const buffer = new Uint8Array(width * height * 3);
@@ -156,7 +157,7 @@ export class NSFWFilter {
 
       // Convert base64 to array buffer
       const base64 = resizedPhoto.base64;
-      const arrayBuffer = Uint8Array.from(atob(base64!), (c) =>
+      const arrayBuffer = Uint8Array.from(atob(base64!), (c: string) =>
         c.charCodeAt(0)
       );
 

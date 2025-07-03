@@ -6,16 +6,13 @@ This guide will help you install and integrate the React Native NSFW Filter into
 
 ### 1. Install the Package
 
-Currently, the package is not published to npm. You can install it directly from the source:
+The package is now available on npm:
 
 ```bash
-# If the package is published to npm (future):
 npm install react-native-nsfw-filter
-
-# For now, you can use it as a local package:
-# Copy the react-native-nsfw-filter folder to your project and install it locally
-npm install ./react-native-nsfw-filter
 ```
+
+> **✅ Published and Ready!** The package is live on the npm registry.
 
 ### 2. Install Required Dependencies
 

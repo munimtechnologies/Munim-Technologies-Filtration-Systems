@@ -87,8 +87,9 @@ class NSFWFilter {
      * Convert image data to tensor
      */
     imageToTensor(rawImageData) {
-        const TO_UINT8ARRAY = true;
-        const { width, height, data } = jpeg.decode(rawImageData, TO_UINT8ARRAY);
+        const { width, height, data } = jpeg.decode(rawImageData, {
+            useTArray: true,
+        });
         // Drop the alpha channel info for mobilenet
         const buffer = new Uint8Array(width * height * 3);
         let offset = 0;
