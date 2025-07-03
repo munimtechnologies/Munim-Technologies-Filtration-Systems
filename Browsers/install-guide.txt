@@ -1,0 +1,31 @@
+🚀 QUICK INSTALLATION GUIDE - Website Info Tool Chrome Extension
+
+STEP 1: ADD ICONS (IMPORTANT!)
+- You need to add 4 icon files to the "icons" folder:
+  • icon16.png (16x16 pixels)
+  • icon32.png (32x32 pixels) 
+  • icon48.png (48x48 pixels)
+  • icon128.png (128x128 pixels)
+
+STEP 2: INSTALL IN CHROME
+1. Open Chrome browser
+2. Go to: chrome://extensions/
+3. Turn ON "Developer mode" (top-right toggle)
+4. Click "Load unpacked"
+5. Select this "Browsers" folder
+6. The extension will appear in your extensions list!
+
+STEP 3: USE THE EXTENSION
+• Click the extension icon in your browser toolbar
+• Visit any website and click the icon to analyze it
+• Right-click on pages for quick analysis option
+• Look for the small blue dot indicator when active
+
+TROUBLESHOOTING:
+❌ Extension won't load? → Check that all files are in this folder
+❌ No icon showing? → Add the 4 PNG icon files mentioned above
+❌ Analysis not working? → Try refreshing the page and popup
+
+📖 For detailed instructions, see README.md
+
+Happy analyzing! 🔍 

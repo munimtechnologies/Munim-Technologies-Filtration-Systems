@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Website Info Tool</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🔍 Website Info</h1>
+      </header>
+
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Analyzing website...</p>
+      </div>
+
+      <div class="content" id="content" style="display: none">
+        <div class="info-section">
+          <h3>📋 Basic Info</h3>
+          <div class="info-item">
+            <span class="label">URL:</span>
+            <span class="value" id="url">-</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Title:</span>
+            <span class="value" id="title">-</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Domain:</span>
+            <span class="value" id="domain">-</span>
+          </div>
+        </div>
+
+        <div class="info-section">
+          <h3>📊 Page Stats</h3>
+          <div class="info-item">
+            <span class="label">Images:</span>
+            <span class="value" id="images">-</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Links:</span>
+            <span class="value" id="links">-</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Scripts:</span>
+            <span class="value" id="scripts">-</span>
+          </div>
+        </div>
+
+        <div class="info-section">
+          <h3>🛠️ Technology</h3>
+          <div class="info-item">
+            <span class="label">Framework:</span>
+            <span class="value" id="framework">-</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Meta Tags:</span>
+            <span class="value" id="metaTags">-</span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="refreshBtn" class="btn-primary">🔄 Refresh</button>
+          <button id="copyBtn" class="btn-secondary">📋 Copy Info</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="58" fill="#667eea" stroke="#5a67d8" stroke-width="4"/>
+  
+  <!-- Magnifying glass -->
+  <circle cx="52" cy="52" r="18" fill="none" stroke="white" stroke-width="4"/>
+  <line x1="66" y1="66" x2="80" y2="80" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  
+  <!-- Info dot -->
+  <circle cx="52" cy="52" r="3" fill="white"/>
+</svg> 
