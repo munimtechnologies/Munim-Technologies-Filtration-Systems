@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Content Script Debug</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+      .status {
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+      .success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+      .error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+      .warning {
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeaa7;
+      }
+      .info {
+        background-color: #d1ecf1;
+        color: #0c5460;
+        border: 1px solid #b8daff;
+      }
+      .log-area {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 10px 0;
+        font-family: monospace;
+        font-size: 12px;
+        max-height: 400px;
+        overflow-y: auto;
+      }
+      button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 5px;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      button:disabled {
+        background-color: #6c757d;
+        cursor: not-allowed;
+      }
+      .debug-section {
+        background-color: white;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🔧 Content Script Debug Page</h1>
+    <p>This page will help debug if the content script is working properly.</p>
+
+    <div class="debug-section">
+      <h2>Extension Status</h2>
+      <div id="extension-status" class="status info">Checking extension...</div>
+      <button onclick="checkExtension()">Check Extension</button>
+    </div>
+
+    <div class="debug-section">
+      <h2>Content Script Status</h2>
+      <div id="content-script-status" class="status info">
+        Checking content script...
+      </div>
+      <button onclick="checkContentScript()">Check Content Script</button>
+    </div>
+
+    <div class="debug-section">
+      <h2>TensorFlow.js Status</h2>
+      <div id="tensorflow-status" class="status info">
+        Checking TensorFlow.js...
+      </div>
+      <button onclick="checkTensorFlow()">Check TensorFlow.js</button>
+      <button onclick="forceTensorFlowLoad()">Force Load TensorFlow.js</button>
+    </div>
+
+    <div class="debug-section">
+      <h2>NSFW Detector Status</h2>
+      <div id="detector-status" class="status info">Checking detector...</div>
+      <button onclick="checkDetector()">Check Detector</button>
+      <button onclick="forceDetectorLoad()">Force Load Detector</button>
+    </div>
+
+    <div class="debug-section">
+      <h2>Console Logs</h2>
+      <div id="log-area" class="log-area"></div>
+      <button onclick="clearLogs()">Clear Logs</button>
+    </div>
+
+    <script>
+      let originalConsoleLog = console.log;
+      let originalConsoleError = console.error;
+      let originalConsoleWarn = console.warn;
+
+      function log(message, type = "info") {
+        const logArea = document.getElementById("log-area");
+        const timestamp = new Date().toLocaleTimeString();
+        const logEntry = document.createElement("div");
+        logEntry.innerHTML = `<span style="color: #666">[${timestamp}]</span> ${message}`;
+        logArea.appendChild(logEntry);
+        logArea.scrollTop = logArea.scrollHeight;
+      }
+
+      // Override console methods to capture logs
+      console.log = function (...args) {
+        originalConsoleLog.apply(console, args);
+        log(args.join(" "), "info");
+      };
+
+      console.error = function (...args) {
+        originalConsoleError.apply(console, args);
+        log(`❌ ${args.join(" ")}`, "error");
+      };
+
+      console.warn = function (...args) {
+        originalConsoleWarn.apply(console, args);
+        log(`⚠️ ${args.join(" ")}`, "warning");
+      };
+
+      function updateStatus(elementId, message, type) {
+        const element = document.getElementById(elementId);
+        element.textContent = message;
+        element.className = `status ${type}`;
+      }
+
+      function checkExtension() {
+        log("🔍 Checking extension...");
+        if (typeof chrome !== "undefined" && chrome.runtime) {
+          updateStatus("extension-status", "✅ Extension available", "success");
+          log(`✅ Extension ID: ${chrome.runtime.id}`);
+        } else {
+          updateStatus(
+            "extension-status",
+            "❌ Extension not available",
+            "error"
+          );
+          log("❌ Chrome extension runtime not available");
+        }
+      }
+
+      function checkContentScript() {
+        log("🔍 Checking content script...");
+
+        // Check for content script global variables
+        const checks = [
+          {
+            name: "nsfwDetectorStatus",
+            available: typeof window.nsfwDetectorStatus !== "undefined",
+          },
+          {
+            name: "tensorflowReady",
+            available: typeof window.tensorflowReady !== "undefined",
+          },
+          {
+            name: "loadNSFWDetector",
+            available: typeof window.loadNSFWDetector !== "undefined",
+          },
+          {
+            name: "getNSFWDetectorStatus",
+            available: typeof window.getNSFWDetectorStatus !== "undefined",
+          },
+          {
+            name: "forceReloadNSFWDetector",
+            available: typeof window.forceReloadNSFWDetector !== "undefined",
+          },
+        ];
+
+        let allAvailable = true;
+        checks.forEach((check) => {
+          if (check.available) {
+            log(`✅ ${check.name} available`);
+          } else {
+            log(`❌ ${check.name} not available`);
+            allAvailable = false;
+          }
+        });
+
+        if (allAvailable) {
+          updateStatus(
+            "content-script-status",
+            "✅ Content script loaded",
+            "success"
+          );
+
+          // Check status
+          if (typeof window.nsfwDetectorStatus !== "undefined") {
+            log(
+              `📊 Detector status: ${JSON.stringify(window.nsfwDetectorStatus)}`
+            );
+          }
+
+          if (typeof window.getNSFWDetectorStatus === "function") {
+            try {
+              const detailedStatus = window.getNSFWDetectorStatus();
+              log(
+                `📊 Detailed status: ${JSON.stringify(detailedStatus, null, 2)}`
+              );
+            } catch (e) {
+              log(`❌ Error getting detailed status: ${e.message}`);
+            }
+          }
+        } else {
+          updateStatus(
+            "content-script-status",
+            "❌ Content script not loaded",
+            "error"
+          );
+        }
+      }
+
+      function checkTensorFlow() {
+        log("🔍 Checking TensorFlow.js...");
+
+        if (typeof window.tf !== "undefined") {
+          updateStatus(
+            "tensorflow-status",
+            `✅ TensorFlow.js available (${window.tf.version})`,
+            "success"
+          );
+          log(`✅ TensorFlow.js version: ${window.tf.version}`);
+          log(`📊 TensorFlow.js backend: ${window.tf.getBackend()}`);
+        } else {
+          updateStatus(
+            "tensorflow-status",
+            "❌ TensorFlow.js not available",
+            "error"
+          );
+          log("❌ TensorFlow.js global variable not found");
+        }
+
+        if (window.tensorflowReady) {
+          log("✅ TensorFlow ready flag: true");
+        } else {
+          log("⚠️ TensorFlow ready flag: false");
+        }
+      }
+
+      function forceTensorFlowLoad() {
+        log("🔄 Force loading TensorFlow.js...");
+
+        if (typeof window.loadTensorFlowJS === "function") {
+          window
+            .loadTensorFlowJS()
+            .then(() => {
+              log("✅ TensorFlow.js force load successful");
+              checkTensorFlow();
+            })
+            .catch((error) => {
+              log(`❌ TensorFlow.js force load failed: ${error.message}`);
+            });
+        } else {
+          log("❌ loadTensorFlowJS function not available");
+        }
+      }
+
+      function checkDetector() {
+        log("🔍 Checking NSFW detector...");
+
+        if (typeof window.nsfwDetector !== "undefined") {
+          updateStatus(
+            "detector-status",
+            "✅ NSFW detector available",
+            "success"
+          );
+          log("✅ NSFW detector instance found");
+
+          if (typeof window.nsfwDetector.isModelReady === "function") {
+            const isReady = window.nsfwDetector.isModelReady();
+            log(`📊 Model ready: ${isReady}`);
+          }
+        } else {
+          updateStatus(
+            "detector-status",
+            "❌ NSFW detector not available",
+            "error"
+          );
+          log("❌ NSFW detector instance not found");
+        }
+      }
+
+      function forceDetectorLoad() {
+        log("🔄 Force loading NSFW detector...");
+
+        if (typeof window.forceReloadNSFWDetector === "function") {
+          window
+            .forceReloadNSFWDetector()
+            .then((result) => {
+              log(`✅ Detector force reload result: ${JSON.stringify(result)}`);
+              checkDetector();
+            })
+            .catch((error) => {
+              log(`❌ Detector force reload failed: ${error.message}`);
+            });
+        } else if (typeof window.loadNSFWDetector === "function") {
+          window
+            .loadNSFWDetector()
+            .then(() => {
+              log("✅ Detector load successful");
+              checkDetector();
+            })
+            .catch((error) => {
+              log(`❌ Detector load failed: ${error.message}`);
+            });
+        } else {
+          log("❌ Detector loading functions not available");
+        }
+      }
+
+      function clearLogs() {
+        document.getElementById("log-area").innerHTML = "";
+      }
+
+      // Listen for TensorFlow ready event
+      window.addEventListener("tensorflowReady", (event) => {
+        log(
+          `📡 TensorFlow ready event received: ${JSON.stringify(event.detail)}`
+        );
+        checkTensorFlow();
+      });
+
+      // Auto-check everything on page load
+      setTimeout(() => {
+        log("🚀 Starting automatic checks...");
+        checkExtension();
+        checkContentScript();
+        checkTensorFlow();
+        checkDetector();
+      }, 1000);
+
+      // Periodic checks
+      setInterval(() => {
+        if (typeof window.nsfwDetectorStatus !== "undefined") {
+          const status = window.nsfwDetectorStatus;
+          if (status.isLoading) {
+            log("⏳ Detector is loading...");
+          } else if (status.isLoaded) {
+            log("✅ Detector is loaded");
+          } else if (status.error) {
+            log(`❌ Detector error: ${status.error}`);
+          }
+        }
+      }, 5000);
+    </script>
+
+    <div class="debug-section">
+      <h2>Test Images</h2>
+      <p>These images can be used to test the detector:</p>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap">
+        <img
+          src="https://via.placeholder.com/150x150/FF0000/FFFFFF?text=Test+1"
+          alt="Test 1"
+          style="border: 1px solid #ccc"
+        />
+        <img
+          src="https://via.placeholder.com/150x150/00FF00/FFFFFF?text=Test+2"
+          alt="Test 2"
+          style="border: 1px solid #ccc"
+        />
+        <img
+          src="https://via.placeholder.com/150x150/0000FF/FFFFFF?text=Test+3"
+          alt="Test 3"
+          style="border: 1px solid #ccc"
+        />
+      </div>
+    </div>
+  </body>
+</html>

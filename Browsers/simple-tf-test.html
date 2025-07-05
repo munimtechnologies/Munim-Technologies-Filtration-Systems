@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple TF Test</title>
+  </head>
+  <body>
+    <h1>TensorFlow.js Simple Test</h1>
+    <div id="output"></div>
+
+    <script src="tf.min.js"></script>
+    <script>
+      function log(message) {
+        console.log(message);
+        document.getElementById("output").innerHTML += "<p>" + message + "</p>";
+      }
+
+      log("Testing TensorFlow.js...");
+
+      // Check if tf exists
+      if (typeof tf === "undefined") {
+        log("❌ tf is undefined");
+      } else {
+        log("✅ tf exists");
+        log("tf type: " + typeof tf);
+        log("tf keys count: " + Object.keys(tf).length);
+        log("tf version: " + (tf.version || "undefined"));
+        log(
+          "tf.loadLayersModel: " + (typeof tf.loadLayersModel || "undefined")
+        );
+
+        if (tf.version && typeof tf.loadLayersModel === "function") {
+          log("✅ TensorFlow.js is fully functional!");
+        } else {
+          log("⚠️ TensorFlow.js is partially loaded");
+        }
+      }
+    </script>
+  </body>
+</html>

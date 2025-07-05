@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NSFW Detector Test</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+      .container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .status {
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 4px;
+        font-weight: bold;
+      }
+      .success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+      .error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+      .warning {
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeaa7;
+      }
+      .info {
+        background-color: #cce7ff;
+        color: #004085;
+        border: 1px solid #b8daff;
+      }
+      button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin: 5px;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      button:disabled {
+        background-color: #6c757d;
+        cursor: not-allowed;
+      }
+      .log {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 4px;
+        font-family: monospace;
+        font-size: 12px;
+        max-height: 400px;
+        overflow-y: auto;
+      }
+      .test-images {
+        display: flex;
+        gap: 10px;
+        margin: 20px 0;
+      }
+      .test-images img {
+        max-width: 150px;
+        height: auto;
+        border: 2px solid #ddd;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🔞 NSFW Detector Test Page</h1>
+      <p>
+        This page tests the NSFW detector functionality of the browser
+        extension.
+      </p>
+
+      <div id="status" class="status info">📊 Checking detector status...</div>
+
+      <div>
+        <button id="checkStatus" onclick="checkDetectorStatus()">
+          Check Status
+        </button>
+        <button id="testDetector" onclick="testDetector()" disabled>
+          Test Detector
+        </button>
+        <button id="clearLog" onclick="clearLog()">Clear Log</button>
+      </div>
+
+      <div class="test-images">
+        <img
+          src="https://picsum.photos/200/300"
+          alt="Test Image 1"
+          crossorigin="anonymous"
+        />
+        <img
+          src="https://picsum.photos/250/200"
+          alt="Test Image 2"
+          crossorigin="anonymous"
+        />
+        <img
+          src="https://picsum.photos/300/200"
+          alt="Test Image 3"
+          crossorigin="anonymous"
+        />
+      </div>
+
+      <div id="log" class="log"></div>
+    </div>
+
+    <script>
+      const statusDiv = document.getElementById("status");
+      const logDiv = document.getElementById("log");
+      const testBtn = document.getElementById("testDetector");
+
+      function log(message) {
+        const timestamp = new Date().toLocaleTimeString();
+        logDiv.innerHTML += `[${timestamp}] ${message}<br>`;
+        logDiv.scrollTop = logDiv.scrollHeight;
+        console.log(message);
+      }
+
+      function updateStatus(message, type = "info") {
+        statusDiv.className = `status ${type}`;
+        statusDiv.textContent = message;
+      }
+
+      function clearLog() {
+        logDiv.innerHTML = "";
+      }
+
+      async function checkDetectorStatus() {
+        log("🔍 Checking detector status...");
+
+        // Check if running in extension context
+        if (typeof chrome === "undefined" || !chrome.runtime) {
+          updateStatus("❌ Not running in extension context", "error");
+          log("❌ This test must be run as part of the browser extension");
+          return;
+        }
+
+        try {
+          // Check for global detector status
+          if (typeof window.nsfwDetectorStatus !== "undefined") {
+            log(
+              "📊 Global detector status: " +
+                JSON.stringify(window.nsfwDetectorStatus)
+            );
+          } else {
+            log("⚠️ Global detector status not available");
+          }
+
+          // Check for detector instance
+          if (typeof window.nsfwDetector !== "undefined") {
+            log("✅ Detector instance found");
+            log("📊 Detector ready: " + window.nsfwDetector.isModelReady());
+
+            if (typeof window.getNSFWDetectorStatus === "function") {
+              const detailedStatus = window.getNSFWDetectorStatus();
+              log(
+                "📊 Detailed status: " + JSON.stringify(detailedStatus, null, 2)
+              );
+
+              if (detailedStatus.isLoaded) {
+                updateStatus("✅ Detector loaded and ready", "success");
+                testBtn.disabled = false;
+              } else if (detailedStatus.isLoading) {
+                updateStatus("⏳ Detector is loading...", "warning");
+              } else {
+                updateStatus("❌ Detector not loaded", "error");
+              }
+            } else {
+              updateStatus("⚠️ Status function not available", "warning");
+            }
+          } else {
+            updateStatus("❌ Detector instance not found", "error");
+            log("❌ window.nsfwDetector not available");
+          }
+
+          // Check TensorFlow.js
+          if (typeof window.tf !== "undefined") {
+            log("✅ TensorFlow.js available: " + window.tf.version);
+          } else {
+            log("❌ TensorFlow.js not available");
+          }
+
+          // Check TensorFlow readiness flag
+          if (window.tensorflowReady) {
+            log("✅ TensorFlow readiness flag: true");
+          } else {
+            log("⚠️ TensorFlow readiness flag: false");
+          }
+        } catch (error) {
+          log("❌ Error checking status: " + error.message);
+          updateStatus("❌ Error checking status", "error");
+        }
+      }
+
+      async function testDetector() {
+        log("🧪 Testing detector...");
+
+        if (typeof window.nsfwDetector === "undefined") {
+          log("❌ Detector not available");
+          updateStatus("❌ Detector not available", "error");
+          return;
+        }
+
+        try {
+          // Test with the images on the page
+          const images = document.querySelectorAll(".test-images img");
+          log(`📸 Found ${images.length} test images`);
+
+          if (window.nsfwDetector.analyzePageImages) {
+            log("🔍 Running page image analysis...");
+            const results = await window.nsfwDetector.analyzePageImages({
+              threshold: 0.6,
+              maxImages: 5,
+            });
+
+            log("📊 Analysis results: " + JSON.stringify(results, null, 2));
+            updateStatus(
+              `✅ Analysis complete: ${results.totalAnalyzed} images analyzed, ${results.nsfwFound} potentially NSFW`,
+              "success"
+            );
+          } else {
+            log("❌ analyzePageImages method not available");
+            updateStatus("❌ Analysis method not available", "error");
+          }
+        } catch (error) {
+          log("❌ Test failed: " + error.message);
+          updateStatus("❌ Test failed: " + error.message, "error");
+        }
+      }
+
+      // Listen for TensorFlow ready event
+      window.addEventListener("tensorflowReady", (event) => {
+        log(
+          "📡 TensorFlow ready event received: " + JSON.stringify(event.detail)
+        );
+        setTimeout(checkDetectorStatus, 1000);
+      });
+
+      // Auto-check status on page load
+      setTimeout(checkDetectorStatus, 1000);
+
+      // Periodically check if detector becomes available
+      const checkInterval = setInterval(() => {
+        if (
+          typeof window.nsfwDetector !== "undefined" &&
+          window.nsfwDetector.isModelReady()
+        ) {
+          clearInterval(checkInterval);
+          checkDetectorStatus();
+        }
+      }, 2000);
+    </script>
+  </body>
+</html>

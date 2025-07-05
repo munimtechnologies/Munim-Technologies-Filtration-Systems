@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TensorFlow.js Loading Test</title>
+  </head>
+  <body>
+    <h1>TensorFlow.js Loading Test</h1>
+    <div id="status">Loading...</div>
+    <div id="details"></div>
+
+    <script src="tf.min.js"></script>
+    <script>
+      console.log("🚀 Starting TensorFlow.js loading test...");
+
+      function updateStatus(message, color = "black") {
+        const statusDiv = document.getElementById("status");
+        statusDiv.textContent = message;
+        statusDiv.style.color = color;
+        console.log(message);
+      }
+
+      function updateDetails(details) {
+        document.getElementById("details").innerHTML =
+          "<pre>" + JSON.stringify(details, null, 2) + "</pre>";
+      }
+
+      // Test TensorFlow.js loading
+      function testTensorFlowLoading() {
+        console.log("🔍 Testing TensorFlow.js loading...");
+
+        if (typeof tf === "undefined") {
+          updateStatus("❌ TensorFlow.js not loaded", "red");
+          return;
+        }
+
+        const details = {
+          tfExists: typeof tf !== "undefined",
+          tfVersion: tf.version,
+          tfLoadLayersModel: typeof tf.loadLayersModel,
+          tfKeys: Object.keys(tf).slice(0, 20),
+          tfReady: tf.ready ? "function" : "not available",
+        };
+
+        updateDetails(details);
+
+        if (tf.version && typeof tf.loadLayersModel === "function") {
+          updateStatus("✅ TensorFlow.js fully loaded!", "green");
+        } else {
+          updateStatus("⚠️ TensorFlow.js partially loaded", "orange");
+        }
+      }
+
+      // Test immediately
+      testTensorFlowLoading();
+
+      // Test after a delay
+      setTimeout(testTensorFlowLoading, 1000);
+      setTimeout(testTensorFlowLoading, 3000);
+      setTimeout(testTensorFlowLoading, 5000);
+    </script>
+  </body>
+</html>
