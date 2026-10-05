@@ -214,7 +214,7 @@ The package includes full TypeScript support. Make sure your `tsconfig.json` inc
 
 ## Example Application
 
-Check out the complete example application in the `Example Application` folder to see a full implementation with UI, error handling, and best practices.
+Check out the complete example application in the `Example App` folder to see a full implementation with UI, error handling, and best practices.
 
 ## Support
 
