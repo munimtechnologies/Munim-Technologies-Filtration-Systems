@@ -101,7 +101,7 @@ Your app now has NSFW detection capabilities. The example above shows the simple
 
 ## 📖 Next Steps
 
-- Check out the [full example app](Example%20Application/) for a complete implementation
+- Check out the [full example app](Example%20App/) for a complete implementation
 - Read the [detailed installation guide](INSTALLATION.md) for advanced usage
 - Explore the [API documentation](react-native-nsfw-filter/README.md) for all available methods
 
@@ -145,7 +145,7 @@ const pornConfidence = await filter.getClassConfidence(
 ## 🆘 Need Help?
 
 - Check the [troubleshooting guide](INSTALLATION.md#troubleshooting)
-- Look at the [example application](Example%20Application/)
+- Look at the [example application](Example%20App/)
 - Create an issue if you're stuck
 
 ## 🙏 Credits

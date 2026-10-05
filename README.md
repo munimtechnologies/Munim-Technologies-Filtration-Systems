@@ -24,7 +24,6 @@ This repository serves as an open-source collection of models and applications u
 - **Browsers/**: Browser extension implementations
 - **Mobile Apps/**: Mobile application solutions
   - **React Native/**: Cross-platform mobile development
-- **Websites/**: Web-based filtration systems
 
 ## Getting Started
 
@@ -35,6 +34,8 @@ This repository serves as an open-source collection of models and applications u
 We welcome contributions from the community to help improve digital safety standards. Please see our contribution guidelines for more information.
 
 ## License
+
+MIT. See [LICENSE](LICENSE).
 
 ## Contact
 
